@@ -1,4 +1,6 @@
 # Ignore backup files
 *~
+# Ignore WebStorm priject files
+.idea/*
 # Ignore module dependencies
 node_modules/*
