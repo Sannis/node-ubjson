@@ -1,0 +1,4 @@
+# Ignore backup files
+*~
+# Ignore module dependencies
+node_modules/*
