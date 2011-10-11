@@ -20,10 +20,11 @@
 , "scripts" :
   { "test" : "make test"
   }
-, "engines" : { "node" : "~0.4" }
-, "dependencies" : { "strtok" : "~0.1" }
+, "engines" : { "node" : "0.4.x" }
+, "dependencies" : { "strtok" : "0.1.x" }
 , "devDependencies" :
   { "nodeunit" : "*"
   , "nodelint" : "*"
+  , "dox" : "https://github.com/Sannis/dox/tarball/0.0.3"
   }
 }

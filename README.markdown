@@ -53,14 +53,19 @@ To lint code:
 
     $> make lint
 
-[Nodeunit] and [nodelint] have been used for developers purposes.
-Them will be automatically installed when oyu use make for _test_ or _lint_.
+To generate dosumentation:
+
+    $> make docs
+
+[Nodeunit], [nodelint] and [Sannis/dox] have been used for developers purposes.  
+Them will be automatically installed when oyu use make for _test_, _lint_ or _docs_.  
 Else you can install them with npm to library dir:
 
-    $> npm install nodeunit nodelint
+    $> npm install nodeunit nodelint dox
 
 [Nodeunit]: https://github.com/caolan/nodeunit
 [nodelint]: https://github.com/tav/nodelint
+[Sannis/dox]: https://github.com/Sannis/dox
 
 
 Contributing
