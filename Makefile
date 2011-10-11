@@ -53,7 +53,7 @@ docs: ./doc/index.html ./doc/changelog.html
 
 pages: docs
 		@echo "Update gh-pages branch:"
-		./gh-pages.sh
+		./gh_pages.sh
 
 .PHONY: all test lint docs pages
 
