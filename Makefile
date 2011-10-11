@@ -24,7 +24,7 @@ test: ./node_modules/.bin/nodeunit $(SOURCES) $(TESTS)
 
 lint: ./node_modules/.bin/nodelint $(SOURCES) $(TESTS)
 		@echo "Lint code:"
-		@./node_modules/.bin/nodelint $(SOURCES) $(TESTS)
+		@./node_modules/.bin/nodelint --config ./nodelint.cfg $(SOURCES) $(TESTS)
 
 .PHONY: all test lint
 
