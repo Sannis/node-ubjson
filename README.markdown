@@ -16,7 +16,9 @@ Extra information available in [wiki].
 Dependencies
 ------------
 
-This module have no dependencies, only Node.js is needed!
+This module depends on [node-strtok] library for tokenize UBJSON data.
+
+[node-strtok]: https://github.com/pgriess/node-strtok
 
 
 Installation
@@ -38,6 +40,10 @@ To get source code:
 
     $> git clone git://github.com/Sannis/node-ubjson.git
     $> cd node-ubjson
+
+To get dependencies simply run make:
+
+    $> make
 
 To run tests:
 

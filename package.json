@@ -20,7 +20,8 @@
 , "scripts" :
   { "test" : "make test"
   }
-, "engines" : { "node" : ">=0.4" }
+, "engines" : { "node" : "~0.4" }
+, "dependencies" : { "strtok" : "~0.1" }
 , "devDependencies" :
   { "nodeunit" : "*"
   , "nodelint" : "*"

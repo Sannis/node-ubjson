@@ -1,5 +1,14 @@
+#!/bin/sh
 SOURCES = $(shell find ./lib -name '*.js')
 TESTS = $(shell find ./test -name '*.js')
+
+all: deps
+
+./node_modules/strtok/lib/strtok.js:
+		@echo "Get dependencies:"
+		@git submodule update --init
+
+deps: ./node_modules/strtok/lib/strtok.js
 
 ./node_modules/.bin/nodeunit:
 		@echo "Install nodeunit:"
@@ -17,5 +26,5 @@ lint: ./node_modules/.bin/nodelint $(SOURCES) $(TESTS)
 		@echo "Lint code:"
 		@./node_modules/.bin/nodelint $(SOURCES) $(TESTS)
 
-.PHONY: test lint
+.PHONY: all test lint
 
