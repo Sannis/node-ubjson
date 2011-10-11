@@ -8,13 +8,13 @@ var fs = require('fs');
 var UBJSON = require('../lib/ubjson.js');
 
 // Create tests for all fixtures files
-var files = fs.readdirSync(__dirname + '/fixtures/simple-types')
+var files = fs.readdirSync(__dirname + '/fixtures/value-types')
               .filter(function(file) { return file.match(/\.json$/); });
 
 files.forEach(function(file) {
   var dataType = file.replace(/\.json$/, '').replace(/_/, '/');
 
-  var fileJSON = __dirname + '/fixtures/simple-types/' + file;
+  var fileJSON = __dirname + '/fixtures/value-types/' + file;
   var fileUBJSON = fileJSON.replace(/\.json$/, '.ubj');
 
   module.exports[dataType] = function (test) {
