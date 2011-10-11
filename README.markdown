@@ -1,7 +1,7 @@
 Node-UBJSON
 ===========
 
-[Universal Binary JSON] packer/unpacker for N[ode.js].  
+[Universal Binary JSON] packer/unpacker for [Node.js].
 Check out the [Github repo] for the source code.  
 Visit [module site] for API docs and examples.  
 Extra information available in [wiki].
