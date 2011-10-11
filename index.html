@@ -1,1 +1,220 @@
-My GitHub Page
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Node-UBJSON</title>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <style>body {
+    margin: 0;
+    padding: 0;
+    font: 14px/1.5 'Palatino Linotype', 'Book Antiqua', Palatino, FreeSerif, serif;
+    color: #252519;
+}
+a {
+    color: #252519;
+}
+a:hover {
+    text-decoration: underline;
+    color: #19469D;
+}
+p {
+    margin: 12px 0;
+}
+h1, h2, h3 {
+    margin: 0;
+    padding: 0;
+}
+ul {
+    padding-left: 20px;
+}
+img {
+    border: 0;
+}
+table#source {
+    width: 100%;
+    border-collapse: collapse;
+}
+table#source td:first-child {
+    padding: 30px;
+    vertical-align: top;
+}
+table#source td:first-child,
+table#source td:first-child pre {
+    width: 450px;
+}
+table#source td:last-child {
+    padding: 30px;
+    border-left: 1px solid #E5E5EE;
+    background: #F5F5FF;
+}
+table#source tr {
+    border-bottom: 1px solid #E5E5EE;
+}
+table#source tr.filename {
+    padding-top: 40px;
+    border-top: 1px solid #E5E5EE;
+}
+table#source tr.filename td:first-child {
+    cursor: pointer;
+    text-transform: capitalize;
+}
+table#source tr.filename td:last-child {
+    font-size: 12px;
+}
+table#source tr.filename h2 {
+    margin: 0;
+    padding: 0;
+    text-decoration: underline;
+}
+table#source tr.code h1,
+table#source tr.code h2,
+table#source tr.code h3 {
+    margin-top: 30px;
+    font-family: "Lucida Grande", "Helvetica Nueue", Arial, sans-serif;
+    font-size: 18px;
+}
+table#source tr.code h2 {
+    font-size: 16px;
+}
+table#source tr.code h3 {
+    font-size: 14px;
+}
+table#source tr.code ul {
+    margin: 15px 0 15px 35px;
+    padding: 0;
+}
+table#source tr.code ul li {
+    margin: 0;
+    padding: 1px 0;
+}
+table#source tr.code ul li p {
+    margin: 0;
+    padding: 0;
+}
+table#source tr.code td:first-child pre {
+    padding: 20px;
+}
+#ribbon {
+    position: fixed;
+    top: 0;
+    right: 0;
+}
+code .string { color: #219161; }
+code .regexp { color: #219161; }
+code .keyword { color: #954121; }
+code .number { color: #19469D; }
+code .comment { color: #bbb; }
+code .this { color: #19469D; }
+pre.shell code .prompt-user { color: #219121; }
+pre.shell code .prompt-root { color: #912121; }
+
+</style>
+        <script>
+            $(function(){
+                if ($('tr.filename').length) {
+                    $('tr.code').hide();
+                    $('tr.filename').toggle(function(){
+                        $(this).nextUntil('.filename').fadeIn();
+                    }, function(){
+                        $(this).nextUntil('.filename').fadeOut();
+                    });
+                }
+            });
+        </script>
+    </head>
+    <body>
+        <a href="http://github.com/Sannis/node-ubjson"><img alt="Fork me on GitHub" id="ribbon" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+        <table id="source"><tbody>
+            <tr>
+                <td><h1>Node-UBJSON</h1>
+<p><a href="./changelog.html">ChangeLog</a>, <a href="http://github.com/Sannis/node-ubjson/wiki">Wiki</a>.</p>
+                </td>
+                <td>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+<h2>Dependencies</h2>
+                </td>
+                <td>
+<p>This module depends on <a href="https://github.com/pgriess/node-strtok">node-strtok</a> library for tokenize UBJSON data.</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+<h2>Installation</h2>
+                </td>
+                <td>
+<p>You can install this module via <a href="https://github.com/isaacs/npm">npm</a>:</p>
+
+<pre class="shell"><code><span class="prompt-user">$&gt;</span> npm install ubjson</code></pre>
+
+<p>Also you can build latest source code from repository, see below.</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+<h2>Work with development version</h2>
+                </td>
+                <td>
+<p>To get source code:</p>
+
+<pre class="shell"><code><span class="prompt-user">$&gt;</span> git clone git:<span class="comment">//github.com/Sannis/node-ubjson.git</span>
+<span class="prompt-user">$&gt;</span> cd node-ubjson</code></pre>
+
+<p>To get dependencies simply run make:</p>
+
+<pre class="shell"><code><span class="prompt-user">$&gt;</span> make</code></pre>
+
+<p>To run tests:</p>
+
+<pre class="shell"><code><span class="prompt-user">$&gt;</span> make test</code></pre>
+
+<p>To lint code:</p>
+
+<pre class="shell"><code><span class="prompt-user">$&gt;</span> make lint</code></pre>
+
+<p>To generate dosumentation:</p>
+
+<pre class="shell"><code><span class="prompt-user">$&gt;</span> make docs</code></pre>
+
+<p><a href="https://github.com/caolan/nodeunit">Nodeunit</a>, <a href="https://github.com/tav/nodelint">nodelint</a> and <a href="https://github.com/Sannis/dox">Sannis/dox</a> have been used for developers purposes.<br></br>Them will be automatically installed when oyu use make for <em>test</em>, <em>lint</em> or <em>docs</em>.<br></br>Else you can install them with npm to library dir:</p>
+
+<pre class="shell"><code><span class="prompt-user">$&gt;</span> npm install nodeunit nodelint dox</code></pre>
+                </td>
+            </tr>
+            <tr>
+                <td>
+<h2>Contributing</h2>
+                </td>
+                <td>
+<p>I will be happy to hear tips from the more experienced programmers.
+I will be glad to see your forks and commits in them :)</p>
+
+<p>To contribute any patches, simply fork this repository using GitHub
+and send a pull request to <a href="https://github.com/Sannis">me</a>. Thanks!</p>
+
+<p>You can find other information about <a href="https://github.com/Sannis/node-ubjson/wiki/contributing">contributing and code style guide in wiki</a>.</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+<h2>Contributors</h2>
+                </td>
+                <td>
+<ul><li><p><strong>Oleg Efimov</strong> ( <a href="mailto:efimovov@gmail.com">E-mail</a>, <a href="https://github.com/Sannis">GitHub</a>, <a href="http://sannis.ru">site</a> )</p><p>Maintainer.<br></br><a href="https://github.com/Sannis/node-ubjson/commits/master?author=Sannis">All commits</a>.</p></li></ul>
+
+<p><a href="https://github.com/Sannis/node-ubjson/contributors">Full contributors list</a>.</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+<h2>License</h2>
+                </td>
+                <td>
+<p>MIT license. See license text in file <a href="https://github.com/Sannis/node-ubjson/blob/master/LICENSE">LICENSE</a>.</p>
+                </td>
+            </tr>
+        </tbody></table>
+    </body>
+</html>
