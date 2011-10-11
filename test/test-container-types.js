@@ -18,16 +18,21 @@ files.forEach(function(file) {
   var fileUBJSON = fileJSON.replace(/\.json$/, '.ubj');
 
   module.exports[dataType] = function (test) {
-    test.expect(1);
+    test.expect(2);
 
-    var json = fs.readFileSync(fileJSON);
-    var ubjson = fs.readFileSync(fileUBJSON, 'binary');
+    var jsonBuffer = fs.readFileSync(fileJSON);
+    var ubjsonBuffer = fs.readFileSync(fileUBJSON);
 
-    var object = JSON.parse(json);
+    var jsonObject = JSON.parse(jsonBuffer.toString('utf8'));
 
-    test.deepEqual(UBJSON.pack(object), ubjson, 'UBJSON.pack(' + dataType + ')');
-    //test.deepEqual(UBJSON.unpack(ubjson), object, 'UBJSON.unpack(' + dataType + ')');
+    UBJSON.pack(jsonObject, function (buffer) {
+      test.deepEqual(buffer.toString('binary'), ubjsonBuffer.toString('binary'), 'UBJSON.pack(' + dataType + ')');
 
-    test.done();
+      UBJSON.unpack(ubjsonBuffer, function (object) {
+        test.deepEqual(object, jsonObject, 'UBJSON.unpack(' + dataType + ')');
+
+        test.done();
+      });
+    });
   };
 });
