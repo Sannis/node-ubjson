@@ -26,10 +26,18 @@ files.forEach(function(file) {
     var jsonObject = JSON.parse(jsonBuffer.toString('utf8'));
 
     UBJSON.pack(jsonObject, function (buffer) {
-      test.deepEqual(buffer.toString('binary'), ubjsonBuffer.toString('binary'), 'UBJSON.pack(' + dataType + ')');
+      test.deepEqual(
+        buffer.toString('binary'),
+        ubjsonBuffer.toString('binary'),
+        'UBJSON.pack(' + dataType + ')'
+      );
 
       UBJSON.unpack(ubjsonBuffer, function (object) {
-        test.deepEqual(object, jsonObject, 'UBJSON.unpack(' + dataType + ')');
+        test.deepEqual(
+          object,
+          jsonObject,
+          'UBJSON.unpack(' + dataType + ')'
+        );
 
         test.done();
       });
