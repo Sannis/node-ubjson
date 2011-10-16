@@ -9,10 +9,10 @@ var UBJSON = require('../lib/ubjson.js');
 
 // Create tests for all fixtures files
 var files = fs.readdirSync(__dirname + '/fixtures/value-types')
-              .filter(function(file) { return file.match(/\.json$/); });
+              .filter(function(file) { return file.match(/\.json$/); }).sort();
 
 files.forEach(function(file) {
-  var dataType = file.replace(/\.json$/, '').replace(/_/, '/');
+  var dataType = file.replace(/\.json$/, '').replace(/_/g, '/');
 
   var fileJSON = __dirname + '/fixtures/value-types/' + file;
   var fileUBJSON = fileJSON.replace(/\.json$/, '.ubj');
