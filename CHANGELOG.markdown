@@ -1,6 +1,10 @@
 Changelog (revision history) for node-ubjson,
 the Universal Binary JSON packer/unpacker for Node.js.
 
+## Version 0.0.4
+
+  * Support for unknown length containers unpacking
+
 ## Version 0.0.3
 
   * Fix object/o type marker
