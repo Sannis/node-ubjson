@@ -17,16 +17,20 @@ files.forEach(function(file) {
   var fileJSON = __dirname + '/fixtures/unknown-length/' + file;
   var fileUBJSON = fileJSON.replace(/\.json$/, '.ubj');
 
+  var jsonBuffer = fs.readFileSync(fileJSON);
+  var ubjsonBuffer = fs.readFileSync(fileUBJSON);
+
+  var jsonObject = JSON.parse(jsonBuffer.toString('utf8'));
+
   module.exports[dataType] = function (test) {
     test.expect(1);
 
-    var jsonBuffer = fs.readFileSync(fileJSON);
-    var ubjsonBuffer = fs.readFileSync(fileUBJSON);
-
-    var jsonObject = JSON.parse(jsonBuffer.toString('utf8'));
-
-    UBJSON.unpack(ubjsonBuffer, function (object) {
-      test.deepEqual(object, jsonObject, 'UBJSON.unpack(' + dataType + ')');
+    UBJSON.unpackBuffer(ubjsonBuffer, function (object) {
+      test.deepEqual(
+        object,
+        jsonObject,
+        'UBJSON.unpackBuffer(' + dataType + ')'
+      );
 
       test.done();
     });

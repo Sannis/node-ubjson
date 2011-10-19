@@ -17,26 +17,40 @@ files.forEach(function(file) {
   var fileJSON = __dirname + '/fixtures/value-types/' + file;
   var fileUBJSON = fileJSON.replace(/\.json$/, '.ubj');
 
+  var jsonBuffer = fs.readFileSync(fileJSON);
+  var ubjsonBuffer = fs.readFileSync(fileUBJSON);
+
+  var jsonObject = JSON.parse(jsonBuffer.toString('utf8'));
+
+  var buffer = new Buffer(1024), resultBuffer;
+
   module.exports[dataType] = function (test) {
-    test.expect(2);
+    test.expect(3);
 
-    var jsonBuffer = fs.readFileSync(fileJSON);
-    var ubjsonBuffer = fs.readFileSync(fileUBJSON);
+    var offset = UBJSON.packToBufferSync(jsonObject, buffer);
 
-    var jsonObject = JSON.parse(jsonBuffer.toString('utf8'));
+    resultBuffer = buffer.slice(0, offset);
 
-    UBJSON.pack(jsonObject, function (buffer) {
-      test.strictEqual(
-        buffer.toString('binary'),
+    test.equal(
+      resultBuffer.toString('binary'),
+      ubjsonBuffer.toString('binary'),
+      'UBJSON.packToBufferSync(' + dataType + ')'
+    );
+
+    UBJSON.packToBuffer(jsonObject, buffer, function (offset) {
+      resultBuffer = buffer.slice(0, offset);
+
+      test.equal(
+        resultBuffer.toString('binary'),
         ubjsonBuffer.toString('binary'),
-        'UBJSON.pack(' + dataType + ')'
+        'UBJSON.packToBuffer(' + dataType + ')'
       );
 
-      UBJSON.unpack(ubjsonBuffer, function (object) {
-        test.strictEqual(
+      UBJSON.unpackBuffer(ubjsonBuffer, function (object) {
+        test.equal(
           object,
           jsonObject,
-          'UBJSON.unpack(' + dataType + ')'
+          'UBJSON.unpackBuffer(' + dataType + ')'
         );
 
         test.done();
