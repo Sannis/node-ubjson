@@ -1,6 +1,8 @@
 [ true
 , true
+, false
 , true
-, true
+, false
+, null
 , true
 ]
