@@ -9,7 +9,7 @@
     , "email": "efimovov@gmail.com"
     }
   ]
-, "bugs" : { "web" : "http://github.com/Sannis/node-ubjson/issues" }
+, "bugs" : { "url" : "http://github.com/Sannis/node-ubjson/issues" }
 , "licenses" : [ { "type" : "MIT" } ]
 , "repositories" :
   [ { "type" : "git"
