@@ -2,7 +2,7 @@
 SOURCES = $(shell find ./lib -name '*.js')
 TESTS = $(shell find ./test -name '*.js')
 
-all: deps
+all: dependencies
 
 stamp-dependencies:
 		@touch stamp-dependencies;

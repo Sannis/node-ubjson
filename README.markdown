@@ -49,6 +49,8 @@ To run tests:
 
     $> make test
 
+Current test status: [![Build Status](https://secure.travis-ci.org/Sannis/node-ubjson.png)](http://travis-ci.org/Sannis/node-ubjson)
+
 To lint code:
 
     $> make lint
@@ -58,10 +60,7 @@ To generate dosumentation:
     $> make docs
 
 [Nodeunit], [nodelint] and [Sannis/dox] have been used for developers purposes.  
-Them will be automatically installed when oyu use make for _test_, _lint_ or _docs_.  
-Else you can install them with npm to library dir:
-
-    $> npm install nodeunit nodelint dox
+Them will be automatically installed when oyu use make for _test_, _lint_ or _docs_.
 
 [Nodeunit]: https://github.com/caolan/nodeunit
 [nodelint]: https://github.com/tav/nodelint
@@ -96,4 +95,3 @@ License
 -------
 
 MIT license. See license text in file [LICENSE](https://github.com/Sannis/node-ubjson/blob/master/LICENSE).
-
