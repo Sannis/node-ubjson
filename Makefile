@@ -4,33 +4,26 @@ TESTS = $(shell find ./test -name '*.js')
 
 all: deps
 
-./node_modules/strtok/lib/strtok.js:
-		@echo "Get dependencies:"
+stamp-dependencies:
+		@touch stamp-dependencies;
 		@git submodule update --init
 
-deps: ./node_modules/strtok/lib/strtok.js
+dependencies: stamp-dependencies
 
-./node_modules/.bin/nodeunit:
-		@echo "Install nodeunit:"
-		npm install nodeunit
+stamp-devdependencies:
+		@touch stamp-devdependencies;
+		@touch stamp-dependencies;
+		@npm install --dev
 
-test: ./node_modules/.bin/nodeunit $(SOURCES) $(TESTS)
-		@echo "Run tests:"
-		@./node_modules/.bin/nodeunit $(TESTS)
+devdependencies: stamp-devdependencies
 
-./node_modules/.bin/nodelint:
-		@echo "Install nodelint:"
-		npm install nodelint
+test: devdependencies
+		@./node_modules/.bin/nodeunit ./test/test-*.js
 
-lint: ./node_modules/.bin/nodelint $(SOURCES) $(TESTS)
-		@echo "Lint code:"
+lint: devdependencies
 		@./node_modules/.bin/nodelint --config ./nodelint.cfg $(SOURCES) $(TESTS)
 
-./node_modules/.bin/dox:
-		@echo "Install dox:"
-		npm install https://github.com/Sannis/dox/tarball/0.0.4
-
-./doc/index.html: ./README.markdown ./node_modules/.bin/dox
+./doc/index.html: ./README.markdown devdependencies
 		./node_modules/.bin/dox \
 		--title "Node-UBJSON" \
 		--desc "[ChangeLog](./changelog.html), [Wiki](http://github.com/Sannis/node-ubjson/wiki)." \
@@ -39,7 +32,7 @@ lint: ./node_modules/.bin/nodelint $(SOURCES) $(TESTS)
 		./README.markdown \
 		> ./doc/index.html
 
-./doc/changelog.html: ./CHANGELOG.markdown ./node_modules/.bin/dox
+./doc/changelog.html: ./CHANGELOG.markdown devdependencies
 		./node_modules/.bin/dox \
 		--title "Node-UBJSON" \
 		--desc "[Home](./index.html), [Wiki](http://github.com/Sannis/node-mysql-ubjson/wiki)." \

@@ -15,10 +15,10 @@ var SinkStream = function(bufferSize) {
     var buffer = new Buffer(bufferSize);
     var bufferOffset = 0;
 
-    self.write = function() {
-        var bl = (typeof arguments[0] === 'string') ?
-            Buffer.byteLength(arguments[0], arguments[1]) :
-            arguments[0].length;
+    self.write = function(data, length) {
+        var bl = (typeof data === 'string') ?
+            Buffer.byteLength(data, length) :
+            data.length;
 
         if (bufferOffset + bl >= buffer.length) {
             var b = new Buffer(((bufferOffset + bl + bufferSize - 1) / bufferSize) * bufferSize);
@@ -26,10 +26,10 @@ var SinkStream = function(bufferSize) {
             buffer = b;
         }
 
-        if (typeof arguments[0] === 'string') {
-            buffer.write(arguments[0], bufferOffset, arguments[1]);
+        if (typeof data === 'string') {
+            buffer.write(data, bufferOffset, length);
         } else {
-            arguments[0].copy(buffer, bufferOffset, 0, arguments[0].length);
+            data.copy(buffer, bufferOffset, 0, data.length);
         }
 
         bufferOffset += bl;
