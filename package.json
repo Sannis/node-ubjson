@@ -1,19 +1,23 @@
 { "name" : "ubjson"
 , "description" : "Universal Binary JSON packer/unpacker for Node.js"
-, "keywords": ["ubjson", "json", "universal binary json"]
+, "keywords": ["ubjson", "universal binary json", "json", "binary", "packed"]
 , "homepage" : "http://sannis.github.com/node-ubjson"
 , "version" : "0.0.4"
-, "author": "Oleg Efimov <efimovov@gmail.com>"
+, "author":
+  { "name": "Oleg Efimov"
+  , "email": "efimovov@gmail.com"
+  , "url": "http://sannis.ru"
+  }
 , "contributors" :
   [ { "name": "Oleg Efimov"
     , "email": "efimovov@gmail.com"
     }
   ]
-, "bugs" : { "url" : "http://github.com/Sannis/node-ubjson/issues" }
+, "bugs" : { "url" : "https://github.com/Sannis/node-ubjson/issues" }
 , "licenses" : [ { "type" : "MIT" } ]
 , "repositories" :
   [ { "type" : "git"
-    , "url" : "http://github.com/Sannis/node-ubjson.git"
+    , "url" : "git://github.com/Sannis/node-ubjson.git"
     }
   ]
 , "main" : "./lib/ubjson.js"
@@ -21,10 +25,9 @@
   { "test" : "make test"
   }
 , "engines" : { "node" : ">=0.5.0" }
-, "dependencies" : { "strtok" : "0.1.x" }
+, "dependencies" : { "strtok" : ">=0.1.1" }
 , "devDependencies" :
-  { "nodeunit" : "*"
-  , "nodelint" : "*"
-  , "dox" : "https://github.com/Sannis/dox/tarball/0.0.3"
+  { "nodeunit" : ">=0.7.4"
+  , "nodelint" : ">=0.6.1"
   }
 }
