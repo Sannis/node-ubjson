@@ -1,13 +1,19 @@
-Node-UBJSON
-===========
+Node-UBJSON [![Build status][Build status image]][Build status URL]
+===================================================================
 
-[Universal Binary JSON] packer/unpacker for [Node.js].  
-Check out the [Github repo] for the source code.  
-Visit [module site] for API docs and examples.  
+**[Universal Binary JSON] packer/unpacker for [Node.js].**
+
+**This module has been tested with Node.js versions 0.6.18 and 0.7.11**
+
+Check out the [Github repo] for the source code.
+Visit [module site] for API docs and examples.
 Extra information available in [wiki].
 
 [Universal Binary JSON]: http://ubjson.org/
 [Node.js]: http://nodejs.org/
+[Build status image]: https://secure.travis-ci.org/Sannis/node-ubjson.png?branch=master
+[Build status URL]: http://travis-ci.org/Sannis/node-ubjson
+
 [Github repo]: https://github.com/Sannis/node-ubjson
 [module site]: http://sannis.github.com/node-ubjson
 [wiki]: https://github.com/Sannis/node-ubjson/wiki
@@ -55,28 +61,27 @@ To lint code:
 
     $> make lint
 
-To generate dosumentation:
+To generate documentation:
 
-    $> make docs
+    $> make doc
 
-[Nodeunit], [nodelint] and [Sannis/dox] have been used for developers purposes.  
+[Nodeunit], [nodelint] and [ndoc] have been used for developers purposes.
 Them will be automatically installed when oyu use make for _test_, _lint_ or _docs_.
 
 [Nodeunit]: https://github.com/caolan/nodeunit
 [nodelint]: https://github.com/tav/nodelint
-[Sannis/dox]: https://github.com/Sannis/dox
+[ndoc]: https://github.com/nodeca/ndoc
 
 
 Contributing
 ------------
 
-I will be happy to hear tips from the more experienced programmers.
-I will be glad to see your forks and commits in them :)
-
 To contribute any patches, simply fork this repository using GitHub
 and send a pull request to [me](https://github.com/Sannis). Thanks!
 
-You can find other information about [contributing and code style guide in wiki](https://github.com/Sannis/node-ubjson/wiki/contributing).
+All information about development use and contribution is placed in the [DEVELOPMENT] file.
+
+[DEVELOPMENT]: https://github.com/Sannis/node-ubjson/blob/master/DEVELOPMENT.markdown
 
 
 Contributors
