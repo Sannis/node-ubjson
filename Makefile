@@ -1,52 +1,33 @@
 #!/bin/sh
-SOURCES = $(shell find ./lib -name '*.js')
-TESTS = $(shell find ./test -name '*.js')
 
-all: dependencies
+CURR_HEAD_SHA := $(firstword $(shell git show-ref --hash HEAD | cut -b -6) master)
+GITHUB_PROJECT_NAME := Sannis/node-ubjson
+API_GITHUB_URL := https://github.com/${GITHUB_PROJECT_NAME}
+API_SRC_URL_FMT := ${API_GITHUB_URL}/blob/${CURR_HEAD_SHA}/{file}\#L{line}
+API_DEST_DIR := ./doc/api
 
-stamp-dependencies:
-		@touch stamp-dependencies;
-		@git submodule update --init
+all: npm-install
 
-dependencies: stamp-dependencies
+npm-install: npm-install-stamp
 
-stamp-devdependencies:
-		@touch stamp-devdependencies;
-		@touch stamp-dependencies;
-		@npm install --dev
+npm-install-stamp: ./package.json
+		npm install
+		touch npm-install-stamp
 
-devdependencies: stamp-devdependencies
-
-test: devdependencies
+test: npm-install
 		@./node_modules/.bin/nodeunit ./test/test-*.js
 
-lint: devdependencies
+lint: npm-install
 		@./node_modules/.bin/nodelint --config ./nodelint.cfg $(SOURCES) $(TESTS)
 
-./doc/index.html: ./README.markdown devdependencies
-		./node_modules/.bin/dox \
-		--title "Node-UBJSON" \
-		--desc "[ChangeLog](./changelog.html), [Wiki](http://github.com/Sannis/node-ubjson/wiki)." \
-		--ribbon "http://github.com/Sannis/node-ubjson" \
-		--ignore-filenames \
-		./README.markdown \
-		> ./doc/index.html
+doc-api: npm-install ./lib/*
+		rm -rf ${API_DEST_DIR}
+		./node_modules/.bin/ndoc -o ${API_DEST_DIR} --ribbon --ribbon-link=${API_GITHUB_URL} --link-format=${API_SRC_URL_FMT} ./lib
 
-./doc/changelog.html: ./CHANGELOG.markdown devdependencies
-		./node_modules/.bin/dox \
-		--title "Node-UBJSON" \
-		--desc "[Home](./index.html), [Wiki](http://github.com/Sannis/node-mysql-ubjson/wiki)." \
-		--ribbon "http://github.com/Sannis/node-ubjson" \
-		--ignore-filenames \
-		./CHANGELOG.markdown \
-		> ./doc/changelog.html
+doc: doc-api
 
-docs: ./doc/index.html ./doc/changelog.html
-
-
-pages: docs
+pages: doc
 		@echo "Update gh-pages branch:"
 		./gh_pages.sh
 
-.PHONY: all test lint docs pages
-
+.PHONY: all npm-install test lint doc pages

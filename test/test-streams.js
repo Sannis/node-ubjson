@@ -47,7 +47,7 @@ var SinkStream = function(bufferSize) {
     };
 };
 
-// Create tests for all fixtures files
+// Create `packToStream` tests for all fixtures files
 var files = fs.readdirSync(__dirname + '/fixtures/streams')
               .filter(function(file) { return file.match(/\.json$/); }).sort();
 
@@ -68,7 +68,7 @@ files.forEach(function(file) {
     test.expect(1);
 
     jsonArray.forEach(function(jsonObject) {
-      UBJSON.packToStreamSync(jsonObject, stream);
+      UBJSON.packToStream(jsonObject, stream);
     });
 
     test.equal(
