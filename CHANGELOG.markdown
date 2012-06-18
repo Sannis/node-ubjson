@@ -1,6 +1,12 @@
 Changelog (revision history) for node-ubjson,
 the Universal Binary JSON packer/unpacker for Node.js.
 
+## Version 0.0.5
+
+  * Implement stream reader/writer
+  * Improve readme, add API docs generated from PDoc comments
+  * Split module into separate files
+
 ## Version 0.0.4
 
   * Support for unknown length containers unpacking
