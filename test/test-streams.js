@@ -5,7 +5,7 @@
  */
 
 var fs = require('fs');
-var UBJSON = require('../lib/ubjson.js');
+var UBJSON = require('../');
 
 // Stream to accept write() calls and track them in its own buffer rather
 // than dumping them to a file descriptor
@@ -62,13 +62,17 @@ files.forEach(function(file) {
 
   var jsonArray = JSON.parse(jsonBuffer.toString('utf8'));
 
-  var stream = new SinkStream(1024);
+
 
   module.exports[dataType] = function (test) {
     test.expect(1);
 
+    var stream = new SinkStream(1024);
+    var ubjsonStream = new UBJSON.Stream(stream);
+
+
     jsonArray.forEach(function(jsonObject) {
-      UBJSON.packToStream(jsonObject, stream);
+      ubjsonStream.send(jsonObject);
     });
 
     test.equal(
