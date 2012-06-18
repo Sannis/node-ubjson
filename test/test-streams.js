@@ -5,6 +5,7 @@
  */
 
 var fs = require('fs');
+var Stream = require('stream').Stream;
 var UBJSON = require('../');
 
 // Stream to accept write() calls and track them in its own buffer rather
@@ -14,6 +15,9 @@ var SinkStream = function(bufferSize) {
 
     var buffer = new Buffer(bufferSize);
     var bufferOffset = 0;
+
+    // This is writable stream
+    self.writable = true;
 
     self.write = function(data, length) {
         var bl = (typeof data === 'string') ?
@@ -45,9 +49,12 @@ var SinkStream = function(bufferSize) {
     self.reset = function() {
         bufferOffset = 0;
     };
+
+    // This is not readable stream
+    self.readable = false;
 };
 
-// Create `packToStream` tests for all fixtures files
+// Create `UbjsonStream.send` and `UbjsonStream.on('value')` tests for all fixtures files
 var files = fs.readdirSync(__dirname + '/fixtures/streams')
               .filter(function(file) { return file.match(/\.json$/); }).sort();
 
@@ -62,14 +69,11 @@ files.forEach(function(file) {
 
   var jsonArray = JSON.parse(jsonBuffer.toString('utf8'));
 
-
-
-  module.exports[dataType] = function (test) {
+  module.exports[dataType + "Send"] = function (test) {
     test.expect(1);
 
     var stream = new SinkStream(1024);
     var ubjsonStream = new UBJSON.Stream(stream);
-
 
     jsonArray.forEach(function(jsonObject) {
       ubjsonStream.send(jsonObject);
@@ -78,9 +82,33 @@ files.forEach(function(file) {
     test.equal(
       stream.getBuffer().toString('binary'),
       ubjsonBuffer.toString('binary'),
-      'UBJSON.packToStreamSync(' + dataType + ')'
+      'UbjsonStream#send(' + dataType + ')'
     );
 
     test.done();
+  };
+
+  module.exports[dataType + "Receive"] = function (test) {
+    test.expect(jsonArray.length + 1);
+
+    var stream = fs.createReadStream(fileUBJSON);
+    var ubjsonStream = new UBJSON.Stream(stream);
+
+    var valuesReceived = 0;
+    ubjsonStream.addListener('value', function(value) {
+      test.deepEqual(value, jsonArray[valuesReceived]);
+
+      valuesReceived += 1;
+    });
+
+    stream.on("end", function () {
+      test.equal(
+        valuesReceived,
+        jsonArray.length,
+        'UbjsonStream@value(' + dataType + ')'
+      );
+
+      test.done();
+    });
   };
 });
