@@ -1,5 +1,8 @@
 #!/bin/sh
 
+SOURCES = $(shell find ./lib -name '*.js')
+TESTS = $(shell find ./test -name '*.js')
+
 CURR_HEAD_SHA := $(firstword $(shell git show-ref --hash HEAD | cut -b -6) master)
 GITHUB_PROJECT_NAME := Sannis/node-ubjson
 API_GITHUB_URL := https://github.com/${GITHUB_PROJECT_NAME}
