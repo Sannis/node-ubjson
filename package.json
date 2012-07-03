@@ -29,6 +29,6 @@
 , "devDependencies" :
   { "nodeunit" : ">=0.7.4"
   , "nodelint" : ">=0.6.1"
-  , "ndoc" : "git://github.com/Sannis/ndoc.git#3ff874f8a2973a03391bb0ac735a8833fdc78e22"
+  , "ndoc" : ">=2.0.0"
   }
 }

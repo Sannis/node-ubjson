@@ -25,7 +25,7 @@ lint: npm-install
 
 doc-api: npm-install ./lib/*
 		rm -rf ${API_DEST_DIR}
-		./node_modules/.bin/ndoc -o ${API_DEST_DIR} --ribbon --ribbon-link=${API_GITHUB_URL} --link-format=${API_SRC_URL_FMT} ./lib
+		./node_modules/.bin/ndoc -o ${API_DEST_DIR} --gh-ribbon=${API_GITHUB_URL} --link-format=${API_SRC_URL_FMT} ./lib
 
 doc: doc-api
 
