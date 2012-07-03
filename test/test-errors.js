@@ -64,7 +64,7 @@ exports.UnpackMalformedObjectWithArrayKey = function (test) {
   var message = 0;
 
   UBJSON.unpackBuffer(ubjsonBuffer, function (error, value) {
-    message++;
+    message += 1;
 
     if (message === 1) {
       test.ok(error instanceof Error);
@@ -95,7 +95,7 @@ exports.UnpackMalformedObjectWithObjectKey = function (test) {
   var message = 0;
 
   UBJSON.unpackBuffer(ubjsonBuffer, function (error, value) {
-    message++;
+    message += 1;
 
     if (message === 1) {
       test.ok(error instanceof Error);
@@ -168,7 +168,7 @@ exports.UnpackMalformedUnknownLengthObjectWithArrayKey = function (test) {
   var message = 0;
 
   UBJSON.unpackBuffer(ubjsonBuffer, function (error, value) {
-    message++;
+    message += 1;
 
     if (message === 1) {
       test.ok(error instanceof Error);
@@ -199,7 +199,7 @@ exports.UnpackMalformedUnknownLengthObjectWithObjectKey = function (test) {
   var message = 0;
 
   UBJSON.unpackBuffer(ubjsonBuffer, function (error, value) {
-    message++;
+    message += 1;
 
     if (message === 1) {
       test.ok(error instanceof Error);
