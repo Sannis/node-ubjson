@@ -25,7 +25,7 @@ files.forEach(function(file) {
   var buffer = new Buffer(8192) /* need 5334 bytes for object/O test */, resultBuffer;
 
   module.exports[dataType] = function (test) {
-    test.expect(3);
+    test.expect(5);
 
     var offset = UBJSON.packToBufferSync(jsonObject, buffer);
 
@@ -33,25 +33,22 @@ files.forEach(function(file) {
 
     test.deepEqual(
       resultBuffer.toString('binary'),
-      ubjsonBuffer.toString('binary'),
-      'UBJSON.packToBufferSync(' + dataType + ')'
+      ubjsonBuffer.toString('binary')
     );
 
-    UBJSON.packToBuffer(jsonObject, buffer, function (offset) {
+    UBJSON.packToBuffer(jsonObject, buffer, function (error, offset) {
+      test.equal(error, null);
+
       resultBuffer = buffer.slice(0, offset);
 
       test.deepEqual(
         resultBuffer.toString('binary'),
-        ubjsonBuffer.toString('binary'),
-        'UBJSON.packToBuffer(' + dataType + ')'
+        ubjsonBuffer.toString('binary')
       );
 
-      UBJSON.unpackBuffer(ubjsonBuffer, function (object) {
-        test.deepEqual(
-          object,
-          jsonObject,
-          'UBJSON.unpackBuffer(' + dataType + ')'
-        );
+      UBJSON.unpackBuffer(ubjsonBuffer, function (error, value) {
+        test.equal(error, null);
+        test.deepEqual(value, jsonObject);
 
         test.done();
       });

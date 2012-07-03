@@ -23,14 +23,11 @@ files.forEach(function(file) {
   var jsonObject = JSON.parse(jsonBuffer.toString('utf8'));
 
   module.exports[dataType] = function (test) {
-    test.expect(1);
+    test.expect(2);
 
-    UBJSON.unpackBuffer(ubjsonBuffer, function (object) {
-      test.deepEqual(
-        object,
-        jsonObject,
-        'UBJSON.unpackBuffer(' + dataType + ')'
-      );
+    UBJSON.unpackBuffer(ubjsonBuffer, function (error, value) {
+      test.equal(error, null);
+      test.deepEqual(value, jsonObject);
 
       test.done();
     });

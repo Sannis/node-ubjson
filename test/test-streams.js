@@ -102,11 +102,7 @@ files.forEach(function(file) {
     });
 
     stream.on("end", function () {
-      test.equal(
-        valuesReceived,
-        jsonArray.length,
-        'UbjsonStream@value(' + dataType + ')'
-      );
+      test.equal(valuesReceived, jsonArray.length);
 
       test.done();
     });
