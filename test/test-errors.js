@@ -48,6 +48,45 @@ exports.UnpackUnsupportedTypes = function (test) {
   });
 };
 
+// see https://github.com/Sannis/node-ubjson/issues/23
+exports.UnpackMalformedArrayWithImpossibleElement = function (test) {
+  test.expect(3);
+
+  // [a][3]
+  //    [B][2]
+  //    [X]
+  var ubjsonBuffer = new Buffer("a\x03B\x02X", "binary");
+
+  UBJSON.unpackBuffer(ubjsonBuffer, function (error, value) {
+    test.ok(error instanceof Error);
+    test.ok(typeof value === 'undefined');
+
+    test.ok(error.message.match(/\[2\]/));
+
+    test.done();
+  });
+};
+
+// see https://github.com/Sannis/node-ubjson/issues/23
+exports.UnpackMalformedUnknownLengthArrayWithImpossibleElement = function (test) {
+  test.expect(3);
+
+  // [a][255]
+  //    [B][2]
+  //    [X]
+  //    [E]
+  var ubjsonBuffer = new Buffer("a\xFFB\x02XE", "binary");
+
+  UBJSON.unpackBuffer(ubjsonBuffer, function (error, value) {
+    test.ok(error instanceof Error);
+    test.ok(typeof value === 'undefined');
+
+    test.ok(error.message.match(/\[2\]/));
+
+    test.done();
+  });
+};
+
 // see https://github.com/Sannis/node-ubjson/issues/21
 exports.UnpackMalformedObjectWithArrayKey = function (test) {
   test.expect(5);
