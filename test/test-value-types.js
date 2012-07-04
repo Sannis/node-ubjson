@@ -5,7 +5,7 @@
  */
 
 var fs = require('fs');
-var UBJSON = require('../lib/ubjson.js');
+var UBJSON = require('../');
 
 // Create tests for all fixtures files
 var files = fs.readdirSync(__dirname + '/fixtures/value-types')

@@ -1,17 +1,12 @@
-/*
- * Code style test
+/*!
+ * Copyright by Oleg Efimov
+ *
+ * See license text in LICENSE file
  */
 
-/**
- * Module dependencies
- */
 var helper = require('./helper');
 
-/**
- * Lint own code
- *
- * @param test
- */
+// Lints module code
 exports.MakeLint = function (test) {
   helper.testConsoleOutput(
     './node_modules/.bin/nodelint',

@@ -4,7 +4,7 @@
  * See license text in LICENSE file
  */
 
-var UBJSON = require('../lib/ubjson.js');
+var UBJSON = require('../');
 
 exports.PackUnsupportedTypes = function (test) {
   test.expect(3);
