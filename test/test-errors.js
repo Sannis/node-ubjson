@@ -38,7 +38,6 @@ exports.UnpackUnsupportedTypes = function (test) {
   test.expect(2);
 
   // X type is not defined in UBJSON
-  //var bufferWithUnsupportedType = new Buffer("a\x03TXT", "binary");
   var bufferWithUnsupportedType = new Buffer("X", "binary");
 
   UBJSON.unpackBuffer(bufferWithUnsupportedType, function (error, value) {
@@ -112,12 +111,31 @@ exports.UnpackMalformedObjectWithObjectKey = function (test) {
 };
 
 // see https://github.com/Sannis/node-ubjson/issues/22
-exports.UnpackObjectWithImpossibleKey = function (test) {
+exports.UnpackMalformedObjectWithImpossibleKey = function (test) {
   test.expect(3);
 
   // [o][2]
   //    [X][B][2]
   var ubjsonBuffer = new Buffer("o\x02XB\x02", "binary");
+
+  UBJSON.unpackBuffer(ubjsonBuffer, function (error, value) {
+    test.ok(error instanceof Error);
+    test.ok(typeof value === 'undefined');
+
+    test.ok(error.message.match(/\{\}/));
+
+    test.done();
+  });
+};
+
+
+// see https://github.com/Sannis/node-ubjson/issues/23
+exports.UnpackMalformedObjectWithImpossibleValue = function (test) {
+  test.expect(3);
+
+  // [o][2]
+  //    [B][2][X]
+  var ubjsonBuffer = new Buffer("o\x02B\x02X", "binary");
 
   UBJSON.unpackBuffer(ubjsonBuffer, function (error, value) {
     test.ok(error instanceof Error);
@@ -241,6 +259,25 @@ exports.UnpackMalformedUnknownLengthObjectWithImpossibleKey = function (test) {
   //    [X][B][2]
   // [E]
   var ubjsonBuffer = new Buffer("o\xFFXB\x02E", "binary");
+
+  UBJSON.unpackBuffer(ubjsonBuffer, function (error, value) {
+    test.ok(error instanceof Error);
+    test.ok(typeof value === 'undefined');
+
+    test.ok(error.message.match(/\{\}/));
+
+    test.done();
+  });
+};
+
+// see https://github.com/Sannis/node-ubjson/issues/23
+exports.UnpackMalformedUnknownLengthObjectWithImpossibleValue = function (test) {
+  test.expect(3);
+
+  // [o][255]
+  //    [B][2][X]
+  // [E]
+  var ubjsonBuffer = new Buffer("o\xFFB\x02XE", "binary");
 
   UBJSON.unpackBuffer(ubjsonBuffer, function (error, value) {
     test.ok(error instanceof Error);
