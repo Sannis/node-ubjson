@@ -68,6 +68,30 @@ exports.UnpackMalformedArrayWithImpossibleElement = function (test) {
 };
 
 // see https://github.com/Sannis/node-ubjson/issues/23
+exports.UnpackMalformedNestedArraysWithImpossibleElement = function (test) {
+  test.expect(4);
+
+  // [a][2]
+  //    [B][1]
+  //    [a][2]
+  //       [B][2]
+  //       [a][2]
+  //          [B][3]
+  //          [X]
+  var ubjsonBuffer = new Buffer("a\x02B\x01a\x02B\x02a\x02B\x03X", "binary");
+
+  UBJSON.unpackBuffer(ubjsonBuffer, function (error, value) {
+    test.ok(error instanceof Error);
+    test.ok(typeof value === 'undefined');
+
+    test.ok(error.message.match(/\[1,\[2,\[3\]\]\]/));
+    test.deepEqual(error.collectedData, [1,[2,[3]]]);
+
+    test.done();
+  });
+};
+
+// see https://github.com/Sannis/node-ubjson/issues/23
 exports.UnpackMalformedUnknownLengthArrayWithImpossibleElement = function (test) {
   test.expect(3);
 
@@ -82,6 +106,33 @@ exports.UnpackMalformedUnknownLengthArrayWithImpossibleElement = function (test)
     test.ok(typeof value === 'undefined');
 
     test.ok(error.message.match(/\[2\]/));
+
+    test.done();
+  });
+};
+
+// see https://github.com/Sannis/node-ubjson/issues/23
+exports.UnpackMalformedUnknownLengthNestedArraysWithImpossibleElement = function (test) {
+  test.expect(4);
+
+  // [a][255]
+  //    [B][1]
+  //    [a][255]
+  //       [B][2]
+  //       [a][255]
+  //          [B][3]
+  //          [X]
+  //          [E]
+  //       [E]
+  //    [E]
+  var ubjsonBuffer = new Buffer("a\xFFB\x01a\xFFB\x02a\xFFB\x03XEEE", "binary");
+
+  UBJSON.unpackBuffer(ubjsonBuffer, function (error, value) {
+    test.ok(error instanceof Error);
+    test.ok(typeof value === 'undefined');
+
+    test.ok(error.message.match(/\[1,\[2,\[3\]\]\]/));
+    test.deepEqual(error.collectedData, [1,[2,[3]]]);
 
     test.done();
   });
@@ -206,6 +257,8 @@ exports.UnpackMalformedUnknownLengthObject = function (test) {
     test.done();
   });
 };
+
+
 
 // see https://github.com/Sannis/node-ubjson/issues/14
 exports.UnpackMalformedUnknownLengthObjectDeeper = function (test) {
