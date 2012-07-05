@@ -35,14 +35,16 @@ exports.PackUnsupportedTypes = function (test) {
 };
 
 exports.UnpackUnsupportedTypes = function (test) {
-  test.expect(2);
+  test.expect(3);
 
   // X type is not defined in UBJSON
-  var bufferWithUnsupportedType = new Buffer("X", "binary");
+  var bufferWithUnsupportedType = new Buffer("XXXXX", "binary");
 
   UBJSON.unpackBuffer(bufferWithUnsupportedType, function (error, value) {
     test.ok(error instanceof Error);
     test.ok(typeof value === 'undefined');
+
+    test.equal(error.remainingData.toString("binary"), "XXXX");
 
     test.done();
   });
@@ -140,7 +142,7 @@ exports.UnpackMalformedUnknownLengthNestedArraysWithImpossibleElement = function
 
 // see https://github.com/Sannis/node-ubjson/issues/21
 exports.UnpackMalformedObjectWithArrayKey = function (test) {
-  test.expect(5);
+  test.expect(4);
 
   // [o][2]
   //    [B][1][B][2]
@@ -150,28 +152,20 @@ exports.UnpackMalformedObjectWithArrayKey = function (test) {
   //       [B][5]
   var ubjsonBuffer = new Buffer("o\x02B\x01B\x02a\x01B\x03B\x05", "binary");
 
-  var message = 0;
-
   UBJSON.unpackBuffer(ubjsonBuffer, function (error, value) {
-    message += 1;
+    test.ok(error instanceof Error);
+    test.ok(typeof value === 'undefined');
 
-    if (message === 1) {
-      test.ok(error instanceof Error);
-      test.ok(typeof value === 'undefined');
+    test.ok(error.message.match(/\{"1":2\}/));
+    test.equal(error.remainingData.toString("binary"), "B\x05");
 
-      test.ok(error.message.match(/\{"1":2\}/));
-    } else {
-      test.equal(error, null);
-      test.equal(value, 5);
-
-      test.done();
-    }
+    test.done();
   });
 };
 
 // see https://github.com/Sannis/node-ubjson/issues/21
 exports.UnpackMalformedObjectWithObjectKey = function (test) {
-  test.expect(5);
+  test.expect(4);
 
   // [o][2]
   //    [B][1][B][2]
@@ -181,22 +175,14 @@ exports.UnpackMalformedObjectWithObjectKey = function (test) {
   //       [B][5]
   var ubjsonBuffer = new Buffer("o\x02B\x01B\x02o\x01B\x03B\x06B\x05", "binary");
 
-  var message = 0;
-
   UBJSON.unpackBuffer(ubjsonBuffer, function (error, value) {
-    message += 1;
+    test.ok(error instanceof Error);
+    test.ok(typeof value === 'undefined');
 
-    if (message === 1) {
-      test.ok(error instanceof Error);
-      test.ok(typeof value === 'undefined');
+    test.ok(error.message.match(/\{"1":2\}/));
+    test.equal(error.remainingData.toString("binary"), "B\x05");
 
-      test.ok(error.message.match(/\{"1":2\}/));
-    } else {
-      test.equal(error, null);
-      test.equal(value, 5);
-
-      test.done();
-    }
+    test.done();
   });
 };
 
@@ -283,7 +269,7 @@ exports.UnpackMalformedUnknownLengthObjectDeeper = function (test) {
 
 // see https://github.com/Sannis/node-ubjson/issues/21
 exports.UnpackMalformedUnknownLengthObjectWithArrayKey = function (test) {
-  test.expect(5);
+  test.expect(4);
 
   // [o][255]
   //    [B][1][B][2]
@@ -293,28 +279,20 @@ exports.UnpackMalformedUnknownLengthObjectWithArrayKey = function (test) {
   //       [B][5]
   var ubjsonBuffer = new Buffer("o\xFFB\x01B\x02a\x01B\x03B\x05", "binary");
 
-  var message = 0;
-
   UBJSON.unpackBuffer(ubjsonBuffer, function (error, value) {
-    message += 1;
+    test.ok(error instanceof Error);
+    test.ok(typeof value === 'undefined');
 
-    if (message === 1) {
-      test.ok(error instanceof Error);
-      test.ok(typeof value === 'undefined');
+    test.ok(error.message.match(/\{"1":2\}/));
+    test.equal(error.remainingData.toString("binary"), "B\x05");
 
-      test.ok(error.message.match(/\{"1":2\}/));
-    } else {
-      test.equal(error, null);
-      test.equal(value, 5);
-
-      test.done();
-    }
+    test.done();
   });
 };
 
 // see https://github.com/Sannis/node-ubjson/issues/21
 exports.UnpackMalformedUnknownLengthObjectWithObjectKey = function (test) {
-  test.expect(5);
+  test.expect(4);
 
   // [o][255]
   //    [B][1][B][2]
@@ -324,22 +302,14 @@ exports.UnpackMalformedUnknownLengthObjectWithObjectKey = function (test) {
   //       [B][5]
   var ubjsonBuffer = new Buffer("o\xFFB\x01B\x02o\x01B\x03B\x06B\x05", "binary");
 
-  var message = 0;
-
   UBJSON.unpackBuffer(ubjsonBuffer, function (error, value) {
-    message += 1;
+    test.ok(error instanceof Error);
+    test.ok(typeof value === 'undefined');
 
-    if (message === 1) {
-      test.ok(error instanceof Error);
-      test.ok(typeof value === 'undefined');
+    test.ok(error.message.match(/\{"1":2\}/));
+    test.equal(error.remainingData.toString("binary"), "B\x05");
 
-      test.ok(error.message.match(/\{"1":2\}/));
-    } else {
-      test.equal(error, null);
-      test.equal(value, 5);
-
-      test.done();
-    }
+    test.done();
   });
 };
 
