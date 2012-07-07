@@ -353,7 +353,7 @@ exports.UnpackMalformedUnknownLengthObjectWithImpossibleValue = function (test) 
 };
 
 exports.ReadStreamShouldEmitErrorOnMalformedInputData = function (test) {
-  //test.expect(jsonArray.length + 1);
+  test.expect(3);
 
   var fileJSON = __dirname + '/fixtures/errors/malformed.json';
   var fileUBJSON = fileJSON.replace(/\.json$/, '.ubj');
