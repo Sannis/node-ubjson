@@ -1,0 +1,5 @@
+{
+  "values": [ true, false ],
+  "errorMessage": "Cannot parse unknown type marker '88' (decimal)",
+  "remainingData" : "TF"
+}

@@ -4,6 +4,8 @@
  * See license text in LICENSE file
  */
 
+var fs = require('fs');
+var helper = require('./helper');
 var UBJSON = require('../');
 
 exports.PackUnsupportedTypes = function (test) {
@@ -348,5 +350,43 @@ exports.UnpackMalformedUnknownLengthObjectWithImpossibleValue = function (test) 
     test.ok(error.message.match(/\{\}/));
 
     test.done();
+  });
+};
+
+exports.ReadStreamShouldEmitErrorOnMalformedInputData = function (test) {
+  //test.expect(jsonArray.length + 1);
+
+  var fileJSON = __dirname + '/fixtures/errors/malformed.json';
+  var fileUBJSON = fileJSON.replace(/\.json$/, '.ubj');
+
+  var expected = JSON.parse(fs.readFileSync(fileJSON).toString('utf8'));
+
+  var stream = fs.createReadStream(fileUBJSON);
+  var ubjsonStream = new UBJSON.Stream(stream);
+
+  // Check stream parsing before malformed data
+  var values = [];
+
+  ubjsonStream.on('value', function(value) {
+    values.push(value);
+  });
+
+  ubjsonStream.on('error', function(error) {
+    test.equal(error.message, expected.errorMessage);
+
+    test.deepEqual(values, expected.values);
+
+    // Check remaining data in stream after malformed data
+    var remainingData = '';
+
+    stream.on("data", function (data) {
+      remainingData += data.toString('binary');
+    });
+
+    stream.on("end", function () {
+      test.equal(remainingData, expected.remainingData);
+
+      test.done();
+    });
   });
 };

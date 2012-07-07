@@ -49,7 +49,7 @@ files.forEach(function(file) {
     var ubjsonStream = new UBJSON.Stream(stream);
 
     var valuesReceived = 0;
-    ubjsonStream.addListener('value', function(value) {
+    ubjsonStream.on('value', function(value) {
       test.deepEqual(value, jsonArray[valuesReceived]);
 
       valuesReceived += 1;
