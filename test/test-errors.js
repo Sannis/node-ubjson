@@ -65,7 +65,7 @@ exports.UnpackMalformedArrayWithImpossibleElement = function (test) {
     test.ok(error instanceof Error);
     test.ok(typeof value === 'undefined');
 
-    test.ok(error.message.match(/\[2\]/));
+    test.deepEqual(error.collectedData, [2]);
 
     test.done();
   });
@@ -73,7 +73,7 @@ exports.UnpackMalformedArrayWithImpossibleElement = function (test) {
 
 // see https://github.com/Sannis/node-ubjson/issues/23
 exports.UnpackMalformedNestedArraysWithImpossibleElement = function (test) {
-  test.expect(4);
+  test.expect(3);
 
   // [a][2]
   //    [B][1]
@@ -88,8 +88,7 @@ exports.UnpackMalformedNestedArraysWithImpossibleElement = function (test) {
     test.ok(error instanceof Error);
     test.ok(typeof value === 'undefined');
 
-    test.ok(error.message.match(/\[1,\[2,\[3\]\]\]/));
-    test.deepEqual(error.collectedData, [1,[2,[3]]]);
+    test.deepEqual(error.collectedData, [1, [2, [3]]]);
 
     test.done();
   });
@@ -109,7 +108,7 @@ exports.UnpackMalformedUnknownLengthArrayWithImpossibleElement = function (test)
     test.ok(error instanceof Error);
     test.ok(typeof value === 'undefined');
 
-    test.ok(error.message.match(/\[2\]/));
+    test.deepEqual(error.collectedData, [2]);
 
     test.done();
   });
@@ -117,7 +116,7 @@ exports.UnpackMalformedUnknownLengthArrayWithImpossibleElement = function (test)
 
 // see https://github.com/Sannis/node-ubjson/issues/23
 exports.UnpackMalformedUnknownLengthNestedArraysWithImpossibleElement = function (test) {
-  test.expect(4);
+  test.expect(3);
 
   // [a][255]
   //    [B][1]
@@ -135,8 +134,7 @@ exports.UnpackMalformedUnknownLengthNestedArraysWithImpossibleElement = function
     test.ok(error instanceof Error);
     test.ok(typeof value === 'undefined');
 
-    test.ok(error.message.match(/\[1,\[2,\[3\]\]\]/));
-    test.deepEqual(error.collectedData, [1,[2,[3]]]);
+    test.deepEqual(error.collectedData, [1, [2, [3]]]);
 
     test.done();
   });
@@ -158,7 +156,7 @@ exports.UnpackMalformedObjectWithArrayKey = function (test) {
     test.ok(error instanceof Error);
     test.ok(typeof value === 'undefined');
 
-    test.ok(error.message.match(/\{"1":2\}/));
+    test.deepEqual(error.collectedData, {"1": 2});
     test.equal(error.remainingData.toString("binary"), "B\x05");
 
     test.done();
@@ -181,7 +179,7 @@ exports.UnpackMalformedObjectWithObjectKey = function (test) {
     test.ok(error instanceof Error);
     test.ok(typeof value === 'undefined');
 
-    test.ok(error.message.match(/\{"1":2\}/));
+    test.deepEqual(error.collectedData, {"1": 2});
     test.equal(error.remainingData.toString("binary"), "B\x05");
 
     test.done();
@@ -200,7 +198,7 @@ exports.UnpackMalformedObjectWithImpossibleKey = function (test) {
     test.ok(error instanceof Error);
     test.ok(typeof value === 'undefined');
 
-    test.ok(error.message.match(/\{\}/));
+    test.deepEqual(error.collectedData, {});
 
     test.done();
   });
@@ -212,14 +210,15 @@ exports.UnpackMalformedObjectWithImpossibleValue = function (test) {
   test.expect(3);
 
   // [o][2]
+  //    [B][1][B][2]
   //    [B][2][X]
-  var ubjsonBuffer = new Buffer("o\x02B\x02X", "binary");
+  var ubjsonBuffer = new Buffer("o\x02B\x01B\x02B\x02X", "binary");
 
   UBJSON.unpackBuffer(ubjsonBuffer, function (error, value) {
     test.ok(error instanceof Error);
     test.ok(typeof value === 'undefined');
 
-    test.ok(error.message.match(/\{\}/));
+    test.deepEqual(error.collectedData, {"1": 2, "2": undefined});
 
     test.done();
   });
@@ -240,7 +239,7 @@ exports.UnpackMalformedUnknownLengthObject = function (test) {
     test.ok(error instanceof Error);
     test.ok(typeof value === 'undefined');
 
-    test.ok(error.message.match(/\{"1":2,"2":4,"3":6\}/));
+    test.deepEqual(error.collectedData, {"1": 2, "2": 4, "3": 6});
 
     test.done();
   });
@@ -263,7 +262,7 @@ exports.UnpackMalformedUnknownLengthObjectDeeper = function (test) {
     test.ok(error instanceof Error);
     test.ok(typeof value === 'undefined');
 
-    test.ok(error.message.match(/\{"1":2\}/));
+    test.deepEqual(error.collectedData, {"1": 2, "2": {"3": 6}});
 
     test.done();
   });
@@ -285,7 +284,7 @@ exports.UnpackMalformedUnknownLengthObjectWithArrayKey = function (test) {
     test.ok(error instanceof Error);
     test.ok(typeof value === 'undefined');
 
-    test.ok(error.message.match(/\{"1":2\}/));
+    test.deepEqual(error.collectedData, {"1": 2});
     test.equal(error.remainingData.toString("binary"), "B\x05");
 
     test.done();
@@ -308,7 +307,7 @@ exports.UnpackMalformedUnknownLengthObjectWithObjectKey = function (test) {
     test.ok(error instanceof Error);
     test.ok(typeof value === 'undefined');
 
-    test.ok(error.message.match(/\{"1":2\}/));
+    test.deepEqual(error.collectedData, {"1": 2});
     test.equal(error.remainingData.toString("binary"), "B\x05");
 
     test.done();
@@ -328,7 +327,7 @@ exports.UnpackMalformedUnknownLengthObjectWithImpossibleKey = function (test) {
     test.ok(error instanceof Error);
     test.ok(typeof value === 'undefined');
 
-    test.ok(error.message.match(/\{\}/));
+    test.deepEqual(error.collectedData, {});
 
     test.done();
   });
@@ -347,7 +346,7 @@ exports.UnpackMalformedUnknownLengthObjectWithImpossibleValue = function (test) 
     test.ok(error instanceof Error);
     test.ok(typeof value === 'undefined');
 
-    test.ok(error.message.match(/\{\}/));
+    test.deepEqual(error.collectedData, {"2": undefined});
 
     test.done();
   });
