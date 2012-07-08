@@ -1,7 +1,7 @@
 Changelog (revision history) for node-ubjson,
 the Universal Binary JSON packer/unpacker for Node.js.
 
-## Version 0.0.6
+## Version 0.0.6 ([milestone v0.0.6])
 
   * Parser should return error for malformed input
     * Now pass error to callback for `unpackBuffer()` and `packToBuffer()`
@@ -41,3 +41,5 @@ the Universal Binary JSON packer/unpacker for Node.js.
   * Packer/unpacker using node-strtok
   * Support for null/Z, true/T, false/F values
   * Support for array/a and array/A containers
+
+[milestone v0.0.6]: https://github.com/Sannis/node-ubjson/issues?milestone=6&state=closed
