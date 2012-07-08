@@ -185,3 +185,33 @@ exports.StreamLongStrings = function (test) {
 
   test.done();
 };
+
+// see https://github.com/Sannis/node-ubjson/issues/19
+// Related to streams, so placed here
+exports.NoOp = function (test) {
+  test.expect(2);
+
+  // [a][255]
+  //    [B][1]
+  //    [a][255]
+  //       [B][2]
+  //       [a][255]
+  //          [B][3]
+  //          [N]
+  //          [B][4]
+  //          [E]
+  //       [B][5]
+  //       [E]
+  //    [N]
+  //    [B][6]
+  //    [E]
+  var ubjsonBuffer = new Buffer("a\xFFB\x01a\xFFB\x02a\xFFB\x03NB\x04EB\x05ENB\x06E", "binary");
+
+  UBJSON.unpackBuffer(ubjsonBuffer, function (error, value) {
+    test.equal(error, null);
+
+    test.deepEqual(value, [1, [2, [3, 4], 5], 6]);
+
+    test.done();
+  });
+};
