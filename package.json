@@ -2,7 +2,7 @@
 , "description" : "Universal Binary JSON packer/unpacker for Node.js"
 , "keywords": ["ubjson", "universal binary json", "json", "binary", "packed", "stream"]
 , "homepage" : "http://sannis.github.com/node-ubjson"
-, "version" : "0.0.5"
+, "version" : "0.0.6"
 , "author":
   { "name": "Oleg Efimov"
   , "email": "efimovov@gmail.com"
