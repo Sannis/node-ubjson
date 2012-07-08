@@ -52,8 +52,8 @@ function testConsoleOutput(file, args, expected, test) {
 
 exports.testConsoleOutput = testConsoleOutput;
 
-// Stream to accept write() calls and track them in its own buffer rather
-// than dumping them to a file descriptor
+// Stream to accept write() calls and track them into its own buffer
+// rather than dumping them to a file descriptor
 var SinkStream = function(bufferSize) {
     var self = this;
 
@@ -99,3 +99,45 @@ var SinkStream = function(bufferSize) {
 };
 
 exports.SinkStream = SinkStream;
+
+// Stream to accept write() calls and collect some statistics
+function StatisticsStream() {
+  var self = this;
+
+  var writtenBytes = 0;
+  var writtenChunks = 0;
+
+  // This is writable stream
+  this.writable = true;
+
+  // Write method
+  // Supports both [buffer] or [string, encoding] as arguments
+  self.write = function (data, encoding) {
+    if (!Buffer.isBuffer(data)) {
+      if (typeof(encoding) !== 'string') {
+        encoding = 'utf8';
+      }
+      data = new Buffer(data.toString(), encoding);
+    }
+
+    writtenBytes += data.length;
+    writtenChunks += 1;
+  };
+
+  self.getStatistics = function() {
+    return {
+      "writtenBytes": writtenBytes,
+      "writtenChunks": writtenChunks
+    };
+  };
+
+  self.reset = function() {
+    writtenBytes = 0;
+    writtenChunks = 0;
+  };
+
+  // This is not readable stream
+  self.readable = false;
+}
+
+exports.StatisticsStream = StatisticsStream;
