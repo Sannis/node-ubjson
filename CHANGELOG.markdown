@@ -4,9 +4,11 @@ the Universal Binary JSON packer/unpacker for Node.js.
 ## Version 0.0.6
 
   * Parser should return error for malformed input
-  * Error object should contain `collectedData` for malformed arrays and objects
-  * Call unpackBuffer() callback only once, include remainingData
-  * Now pass error to callback for unpackBuffer and packToBuffer
+    * Now pass error to callback for `unpackBuffer()` and `packToBuffer()`
+    * Call `unpackBuffer()` callback only once
+    * `unpackBuffer()` callback error object should contain `remainingData`
+    * Error object should contain `collectedData` for malformed arrays and objects
+    * `Stream` now emit 'error' event on malformed input
   * Add global and per-stream send buffer length setting with 'rw' interface
   * Write stream should split long strings
   * Implement int64/L support
