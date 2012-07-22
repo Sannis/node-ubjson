@@ -5,8 +5,8 @@ TESTS = $(shell find ./test -name '*.js')
 
 CURR_HEAD_SHA := $(firstword $(shell git show-ref --hash HEAD | cut -b -6) master)
 GITHUB_PROJECT_NAME := Sannis/node-ubjson
-API_GITHUB_URL := https://github.com/${GITHUB_PROJECT_NAME}
-API_SRC_URL_FMT := ${API_GITHUB_URL}/blob/${CURR_HEAD_SHA}/{file}\#L{line}
+GITHUB_PROJECT_URL := https://github.com/${GITHUB_PROJECT_NAME}
+API_SRC_URL_FMT := ${GITHUB_PROJECT_URL}/blob/${CURR_HEAD_SHA}/{file}\#L{line}
 API_DEST_DIR := ./doc/api
 
 all: npm-install
@@ -25,7 +25,11 @@ lint: npm-install
 
 doc-api: npm-install ./lib/*
 		rm -rf ${API_DEST_DIR}
-		./node_modules/.bin/ndoc -o ${API_DEST_DIR} --gh-ribbon=${API_GITHUB_URL} --link-format=${API_SRC_URL_FMT} ./lib
+		./node_modules/.bin/ndoc \
+		  --gh-ribbon ${GITHUB_PROJECT_URL} \
+		  --link-format ${API_SRC_URL_FMT} \
+		  --output ${API_DEST_DIR} \
+		  ./lib/*.js
 
 doc: doc-api
 

@@ -29,6 +29,6 @@
 , "devDependencies" :
   { "nodeunit" : ">=0.7.4"
   , "nodelint" : ">=0.6.1"
-  , "ndoc" : ">=2.0.0"
+  , "ndoc" : ">=2.0.2"
   }
 }
