@@ -10,7 +10,7 @@ DESC=`git describe`
 
 # Update master branch
 make doc
-git add doc/*.html
+git add doc/*.html doc/api/*.html
 git ci -m "Update docs to $DESC"
 
 # Update gh-pages branch
