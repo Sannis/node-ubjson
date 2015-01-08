@@ -14,7 +14,7 @@ git add doc/*.html doc/api/*.html
 git ci -m "Update docs to $DESC"
 
 # Update gh-pages branch
-TMP=`mktemp --tmpdir -d temp.XXXXXXXXXX`
+TMP=`mktemp --tmpdir -d gh_pages.XXXXXXXXXX 2> /dev/null || mktemp -d -t gh_pages`
 cp ./doc/* $TMP
 rm -f $TMP/*~
 git checkout gh-pages
