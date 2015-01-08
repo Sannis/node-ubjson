@@ -15,11 +15,10 @@
   ]
 , "bugs" : { "url" : "https://github.com/Sannis/node-ubjson/issues" }
 , "licenses" : [ { "type" : "MIT" } ]
-, "repositories" :
-  [ { "type" : "git"
-    , "url" : "git://github.com/Sannis/node-ubjson.git"
-    }
-  ]
+, "repository" :
+  { "type" : "git"
+  , "url" : "git://github.com/Sannis/node-ubjson.git"
+  }
 , "main" : "./lib/ubjson.js"
 , "scripts" :
   { "test" : "make test"
