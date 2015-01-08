@@ -15,10 +15,10 @@ git ci -m "Update docs to $DESC"
 
 # Update gh-pages branch
 TMP=`mktemp --tmpdir -d gh_pages.XXXXXXXXXX 2> /dev/null || mktemp -d -t gh_pages`
-cp ./doc/* $TMP
+cp -r ./doc/* $TMP
 rm -f $TMP/*~
 git checkout gh-pages
-cp $TMP/* ./
+cp -r $TMP/* ./
 git add ./*.js ./*.html
 git ci -m "Update docs to $DESC"
 git checkout master
