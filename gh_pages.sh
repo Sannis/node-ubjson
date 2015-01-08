@@ -6,7 +6,7 @@ then
     exit 1
 fi
 
-DESC=`git describe`
+DESC=`git describe --tags`
 
 # Update master branch
 make doc
