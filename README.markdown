@@ -3,8 +3,6 @@ Node-UBJSON [![Build status][Build status image]][Build status URL]
 
 **[Universal Binary JSON] packer/unpacker for [Node.js].**
 
-**This module has been tested with Node.js versions 0.6.18 and 0.8.2**
-
 Check out the [Github repo] for the source code.
 Visit [module site] for API docs and examples.
 Extra information available in [wiki].
