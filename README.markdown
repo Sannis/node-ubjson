@@ -1,5 +1,15 @@
-Node-UBJSON [![Build status][Build status image]][Build status URL]
-===================================================================
+Node-UBJSON
+===========
+
+[![NPM version][NPMVI]][NPMVURL] [![BS][BSI]][BSURL]
+
+[NPMVI]: https://badge.fury.io/js/ubjson.png
+[NPMVURL]: http://badge.fury.io/js/ubjson
+
+[BSI]: https://secure.travis-ci.org/Sannis/node-ubjson.png?branch=master
+[BSURL]: http://travis-ci.org/Sannis/node-ubjson
+
+-----
 
 **[Universal Binary JSON] packer/unpacker for [Node.js].**
 
@@ -9,8 +19,6 @@ Extra information available in [wiki].
 
 [Universal Binary JSON]: http://ubjson.org/
 [Node.js]: http://nodejs.org/
-[Build status image]: https://secure.travis-ci.org/Sannis/node-ubjson.png?branch=master
-[Build status URL]: http://travis-ci.org/Sannis/node-ubjson
 
 [Github repo]: https://github.com/Sannis/node-ubjson
 [module site]: http://sannis.github.com/node-ubjson
