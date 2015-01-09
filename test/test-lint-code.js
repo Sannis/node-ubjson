@@ -12,7 +12,7 @@ exports.MakeLint = function (test) {
     './node_modules/.bin/jshint',
     ['.', '--show-non-errors'],
     {
-      stdout: '\n',
+      stdout: '',
       stderr: '',
       exitCode: 0
     },
