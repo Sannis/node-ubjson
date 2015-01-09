@@ -18,11 +18,11 @@ To generate documentation:
 
     $> make doc
 
-[Nodeunit], [nodelint] and [ndoc] have been used for developers purposes.
+[Nodeunit], [jshint] and [ndoc] have been used for developers purposes.
 Them will be automatically installed when you use `make` for _test_, _lint_ or _docs_.
 
 [Nodeunit]: https://github.com/caolan/nodeunit
-[nodelint]: https://github.com/tav/nodelint
+[jshint]: https://github.com/jshint/jshint
 [ndoc]: https://github.com/nodeca/ndoc
 
 
@@ -50,7 +50,7 @@ Coding style
 Code style based on [Node.js code styles](http://github.com/ry/node/wiki/contributing).
 
 1. Discuss large changes before coding (this is good idea in collaborative development)
-2. Javascript code should follow [Douglas Crockford code conventions for the javascript programming language](http://javascript.crockford.com/code.html) and be run through [Nodelint](http://github.com/tav/nodelint).
+2. Javascript code should follow [Douglas Crockford code conventions for the javascript programming language](http://javascript.crockford.com/code.html) and be run through [JSHint](http://github.com/jshint/jshint).
    Also:
     * Code should has two space indention
     * Multi-line <code>if</code> statements must have braces

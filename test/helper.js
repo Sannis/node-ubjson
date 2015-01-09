@@ -5,8 +5,8 @@
  */
 var childProcess = require('child_process');
 
-var node_deprecated_warning = "The \"sys\" module is now called \"util\". "
-                            + "It should have a similar interface.\n";
+var node_deprecated_warning = "The \"sys\" module is now called \"util\". " +
+                              "It should have a similar interface.\n";
 
 // Helper for testing external program output
 function testConsoleOutput(file, args, expected, test) {

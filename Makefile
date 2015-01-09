@@ -1,8 +1,5 @@
 #!/bin/sh
 
-SOURCES = $(shell find ./lib -name '*.js')
-TESTS = $(shell find ./test -name '*.js')
-
 CURR_HEAD_SHA := $(firstword $(shell git show-ref --hash HEAD | cut -b -6) master)
 GITHUB_PROJECT_NAME := Sannis/node-ubjson
 GITHUB_PROJECT_URL := https://github.com/${GITHUB_PROJECT_NAME}
@@ -21,7 +18,7 @@ test: npm-install
 		@./node_modules/.bin/nodeunit ./test/test-*.js
 
 lint: npm-install
-		@./node_modules/.bin/nodelint --config ./nodelint.cfg $(SOURCES) $(TESTS)
+		@./node_modules/.bin/jshint . --show-non-errors
 
 doc-api: npm-install ./lib/*
 		rm -rf ${API_DEST_DIR}

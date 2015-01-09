@@ -9,10 +9,10 @@ var helper = require('./helper');
 // Lints module code
 exports.MakeLint = function (test) {
   helper.testConsoleOutput(
-    './node_modules/.bin/nodelint',
-    ['--config', './nodelint.cfg', './lib/', './test/'],
+    './node_modules/.bin/jshint',
+    ['.', '--show-non-errors'],
     {
-      stdout: '0 errors\n',
+      stdout: '\n',
       stderr: '',
       exitCode: 0
     },

@@ -5,7 +5,6 @@
  */
 
 var fs = require('fs');
-var helper = require('./helper');
 var UBJSON = require('../');
 
 exports.PackUnsupportedTypes = function (test) {
