@@ -5,7 +5,7 @@
  */
 
 var fs = require('fs');
-var UBJSON = require('../');
+var UBJSON = require(process.env.LIB_COV ? '../lib-cov/ubjson' : '../');
 
 // Create tests for all fixtures files
 var files = fs.readdirSync(__dirname + '/fixtures/complex')

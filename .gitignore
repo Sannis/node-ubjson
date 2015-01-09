@@ -5,3 +5,6 @@ node_modules/*
 stamp-dependencies
 stamp-devdependencies
 npm-install-stamp
+
+# Coverage
+lib-cov

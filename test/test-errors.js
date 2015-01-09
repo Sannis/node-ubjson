@@ -5,7 +5,7 @@
  */
 
 var fs = require('fs');
-var UBJSON = require('../');
+var UBJSON = require(process.env.LIB_COV ? '../lib-cov/ubjson' : '../');
 
 exports.PackUnsupportedTypes = function (test) {
   test.expect(3);

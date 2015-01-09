@@ -1,13 +1,16 @@
 Node-UBJSON
 ===========
 
-[![NPM version][NPMVI]][NPMVURL] [![BS][BSI]][BSURL]
+[![NPM version][NPMVI]][NPMVURL] [![BS][BSI]][BSURL] [![CS][CSI]][CSURL]
 
 [NPMVI]: https://badge.fury.io/js/ubjson.png
 [NPMVURL]: http://badge.fury.io/js/ubjson
 
 [BSI]: https://secure.travis-ci.org/Sannis/node-ubjson.png?branch=master
 [BSURL]: http://travis-ci.org/Sannis/node-ubjson
+
+[CSI]: https://coveralls.io/repos/Sannis/node-ubjson/badge.png
+[CSURL]: https://coveralls.io/r/Sannis/node-ubjson
 
 -----
 

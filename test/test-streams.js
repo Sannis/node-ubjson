@@ -6,7 +6,7 @@
 
 var fs = require('fs');
 var helper = require('./helper');
-var UBJSON = require('../');
+var UBJSON = require(process.env.LIB_COV ? '../lib-cov/ubjson' : '../');
 
 // Create `UbjsonStream.send` and `UbjsonStream.on('value')` tests for all fixtures files
 var files = fs.readdirSync(__dirname + '/fixtures/streams')

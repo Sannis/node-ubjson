@@ -17,6 +17,10 @@ npm-install-stamp: ./package.json
 test: npm-install
 		@./node_modules/.bin/nodeunit ./test/test-*.js
 
+test-coveralls: npm-install
+		rm -rf ./lib-cov && ./node_modules/.bin/jscoverage lib lib-cov
+		LIB_COV=1 ./node_modules/.bin/nodeunit ./test/test-*.js --reporter lcov | ./node_modules/coveralls/bin/coveralls.js
+
 lint: npm-install
 		@./node_modules/.bin/jshint . --show-non-errors
 
@@ -34,4 +38,4 @@ pages: doc
 		@echo "Update gh-pages branch:"
 		./gh_pages.sh
 
-.PHONY: all npm-install test lint doc pages
+.PHONY: all npm-install test test-coveralls lint doc pages
