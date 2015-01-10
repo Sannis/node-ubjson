@@ -1,6 +1,13 @@
 Changelog (revision history) for node-ubjson,
 the Universal Binary JSON packer/unpacker for Node.js.
 
+## Version 0.0.8
+
+  * Use `long` npm module for int64 values storing
+  * Write safe 64-bit integers as INT64 UBJSON types
+  * Add usage examples to readme
+  * Few tests added
+
 ## Version 0.0.7
 
   * No-Op marker support
