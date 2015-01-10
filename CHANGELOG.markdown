@@ -1,7 +1,16 @@
 Changelog (revision history) for node-ubjson,
 the Universal Binary JSON packer/unpacker for Node.js.
 
-## Version 0.0.6 ([milestone v0.0.6])
+## Version 0.0.7
+
+  * No-Op marker support
+  * Add code coverage report via Coveralls
+  * Add API docs to GH pages
+  * Use JSHint for linting code
+  * Fix TMP dir creation on OS X
+  * Support latest Node.js versions
+
+## Version 0.0.6
 
   * Parser should return error for malformed input
     * Now pass error to callback for `unpackBuffer()` and `packToBuffer()`
