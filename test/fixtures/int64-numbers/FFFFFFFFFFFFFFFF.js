@@ -1,8 +1,8 @@
 // Require class for int64 storing
-var Int64 = require(process.env.LIB_COV ? '../../../lib-cov/int64' : '../../../lib/int64.js');
+var Long = require('long');
 
 // Construct int64 value
-var value = new Int64(0xFFFFFFFF, 0xFFFFFFFF);
+var value = new Long(0xFFFFFFFF, 0xFFFFFFFF);
 
 // Export
 module.exports = value;
