@@ -10,13 +10,12 @@ var UBJSON = require(process.env.LIB_COV ? '../lib-cov/ubjson' : '../');
 exports.PackUnsupportedObject = function (test) {
   test.expect(4);
 
-  var unsupportedObject = new Date();
   var valueContainsUnsupportedObject = {
     a: 1,
     b: 2,
     c: [
       "qwerty",
-      unsupportedObject,
+      new Date(),
       12e34
     ]
   };
@@ -36,16 +35,43 @@ exports.PackUnsupportedObject = function (test) {
   });
 };
 
-exports.PackUnsupportedType = function (test) {
+exports.PackUnsupportedTypeUndefined = function (test) {
   test.expect(4);
 
-  var unsupportedTypeValue = function A () {};
   var valueContainsUnsupportedTypeValue = {
     a: 1,
     b: 2,
     c: [
       "qwerty",
-      unsupportedTypeValue,
+      undefined,
+      12e34
+    ]
+  };
+
+  var buffer = new Buffer(1024);
+
+  test.throws(function () {
+    return UBJSON.packToBufferSync(valueContainsUnsupportedTypeValue, buffer);
+  });
+
+  UBJSON.packToBuffer(valueContainsUnsupportedTypeValue, buffer, function (error, offset) {
+    test.ok(error instanceof Error);
+    test.equals(error.message, "Cannot pack value of type undefined");
+    test.ok(typeof offset === 'undefined');
+
+    test.done();
+  });
+};
+
+exports.PackUnsupportedTypeFunction = function (test) {
+  test.expect(4);
+
+  var valueContainsUnsupportedTypeValue = {
+    a: 1,
+    b: 2,
+    c: [
+      "qwerty",
+      function A () {},
       12e34
     ]
   };
