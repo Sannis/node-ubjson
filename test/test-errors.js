@@ -7,11 +7,40 @@
 var fs = require('fs');
 var UBJSON = require(process.env.LIB_COV ? '../lib-cov/ubjson' : '../');
 
-exports.PackUnsupportedTypes = function (test) {
-  test.expect(3);
+exports.PackUnsupportedObject = function (test) {
+  test.expect(4);
 
-  var unsupportedTypeValue = new Date();
-  var valueContainsUnsupportedTypeValues = {
+  var unsupportedObject = new Date();
+  var valueContainsUnsupportedObject = {
+    a: 1,
+    b: 2,
+    c: [
+      "qwerty",
+      unsupportedObject,
+      12e34
+    ]
+  };
+
+  var buffer = new Buffer(1024);
+
+  test.throws(function () {
+    return UBJSON.packToBufferSync(valueContainsUnsupportedObject, buffer);
+  });
+
+  UBJSON.packToBuffer(valueContainsUnsupportedObject, buffer, function (error, offset) {
+    test.ok(error instanceof Error);
+    test.equals(error.message, "Cannot pack object constructed by function Date() { [native code] }");
+    test.ok(typeof offset === 'undefined');
+
+    test.done();
+  });
+};
+
+exports.PackUnsupportedType = function (test) {
+  test.expect(4);
+
+  var unsupportedTypeValue = function A () {};
+  var valueContainsUnsupportedTypeValue = {
     a: 1,
     b: 2,
     c: [
@@ -24,11 +53,12 @@ exports.PackUnsupportedTypes = function (test) {
   var buffer = new Buffer(1024);
 
   test.throws(function () {
-    return UBJSON.packToBufferSync(valueContainsUnsupportedTypeValues, buffer);
+    return UBJSON.packToBufferSync(valueContainsUnsupportedTypeValue, buffer);
   });
 
-  UBJSON.packToBuffer(valueContainsUnsupportedTypeValues, buffer, function (error, offset) {
+  UBJSON.packToBuffer(valueContainsUnsupportedTypeValue, buffer, function (error, offset) {
     test.ok(error instanceof Error);
+    test.equals(error.message, "Cannot pack value of type function");
     test.ok(typeof offset === 'undefined');
 
     test.done();
