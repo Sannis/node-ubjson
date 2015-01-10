@@ -40,12 +40,37 @@ Also you can build latest source code from repository, see below.
 [npm]: https://github.com/isaacs/npm
 
 
-Dependencies
-------------
+Usage example
+-------------
 
-This module depends on [node-strtok] library for tokenize UBJSON data.
+```js
+// Preallocate buffer
+var buffer = new Buffer(1024);
 
-[node-strtok]: https://github.com/pgriess/node-strtok
+// Synchronous pack
+var offset = UBJSON.packToBufferSync(jsonObject, buffer);
+buffer = buffer.slice(0, offset);
+
+// Asynchronous pack
+UBJSON.packToBuffer({"key": "value"}, buffer, function (error, offset) {
+  if (error) {
+    throw error;
+  }
+
+  buffer = buffer.slice(0, offset);
+
+  // Asynchronous unpack
+  UBJSON.unpackBuffer(buffer, function (error, value) {
+    if (error) {
+      throw error;
+    }
+
+    done();
+  });
+});
+```
+
+[Full API documentation](http://sannis.github.io/node-ubjson/api/).
 
 
 Contributing
@@ -55,8 +80,6 @@ To contribute any patches, simply fork this repository using GitHub
 and send a pull request to [me](https://github.com/Sannis). Thanks!
 
 All information about development use and contribution is placed in the [DEVELOPMENT] file.
-
-[Full contributors list](https://github.com/Sannis/node-ubjson/contributors).
 
 [DEVELOPMENT]: https://github.com/Sannis/node-ubjson/blob/master/DEVELOPMENT.markdown
 
