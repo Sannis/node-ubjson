@@ -7,6 +7,9 @@
 var fs = require('fs');
 var UBJSON = require(process.env.LIB_COV ? '../lib-cov/ubjson' : '../');
 
+// Require class for int64 storing
+var Long = require('long');
+
 // Create tests for all fixtures files
 var files = fs.readdirSync(__dirname + '/fixtures/int64-numbers')
               .filter(function(file) { return file.match(/\.js$/); }).sort();
@@ -46,6 +49,11 @@ files.forEach(function(file) {
 
       UBJSON.unpackBuffer(ubjsonBuffer, function (error, value) {
         test.equal(error, null);
+
+        if (!Long.isLong(jsObject)) {
+          jsObject = Long.fromNumber(jsObject);
+        }
+
         test.deepEqual(value, jsObject);
 
         test.done();
